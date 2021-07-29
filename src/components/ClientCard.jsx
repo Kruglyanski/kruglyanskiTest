@@ -14,7 +14,7 @@ const ClientCard = ({client}) => {
     }
     return (
         <div  onClick={clickHandler}>
-            {client.name}<br/>{client.phone}
+            {client.name}<br/>{client.phone}<br/>
             {deleteIsVisible &&
             <button style={{backgroundColor: 'red'}} id={client.id} onClick={deleteHandler}>Удалить</button>}
         </div>
