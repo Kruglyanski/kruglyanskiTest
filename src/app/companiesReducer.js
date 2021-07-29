@@ -58,19 +58,20 @@ export const createClient = createAsyncThunk(
         }
         await api.bindClient({AddressId: state.companies.currentFlatId, ClientId: data.id} )
         dispatch(fetchFlatsByCompanyId(getState().companies.currentCompanyId))
-        return data
+
     }
 )
 
-export const deleteClient = createAsyncThunk(
+export const deleteClient = createAsyncThunk(     // жители не удаляются!?
     'companiesReducer/deleteClient',
-    async (id) => {
+    async (id, {dispatch,getState}) => {
         const data = await api.deleteClient(id)
             .then((res) => res && res.json())
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')
         }
-        return data
+        dispatch(fetchFlatsByCompanyId(getState().companies.currentCompanyId))
+
     }
 )
 
