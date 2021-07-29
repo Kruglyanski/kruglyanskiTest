@@ -1,18 +1,16 @@
 import React from 'react'
 import { useSelector} from 'react-redux'
-
 import ClientCard from './ClientCard'
-import {selectClientsById} from '../app/selectors'
+import {selectFlatById} from '../app/selectors'
 import Form from './Form'
 
 const FlatPage = () => {
-    const clients = useSelector(state => selectClientsById(state))
-
+    const flat = useSelector(state => selectFlatById(state))
     const styleUl = {
         display: 'flex',
         flexWrap: 'wrap',
         flexGrow: 1,
-        width: 1000,
+        width: 1010,
         height: 'auto',
         margin: '0 auto',
         border: '1px solid #666',
@@ -34,9 +32,9 @@ const FlatPage = () => {
     return (
         <div style={{height: '100%'}}>
             <ul style={styleUl}>
-                {clients.length
+                {flat && flat.clients.length
                     ?
-                    clients.map(c => <li style={styleLi} key={c.id} >
+                    flat.clients.map(c => <li style={styleLi} key={c.id} >
                         <ClientCard client={c}/>
                 </li>)
                     :

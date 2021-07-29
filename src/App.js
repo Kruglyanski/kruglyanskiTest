@@ -9,9 +9,10 @@ import './App.css'
 
 import CompaniesPage from './components/CompaniesPage'
 import CompanyPage from './components/CompanyPage'
-import FlatPage from './components/FlatPage'
+
 import {useDispatch} from 'react-redux'
 import {fetchCompanies} from './app/companiesReducer'
+import FlatPageContainer from './components/FlatPageContainer'
 
 function App() {
     const dispatch = useDispatch()
@@ -24,7 +25,7 @@ function App() {
                 <Switch>
                     <Route exact path="/" component={CompaniesPage}/>
                     <Route exact path="/companies/:company" component={CompanyPage}/>
-                    <Route exact path="/flats/:flat" component={FlatPage}/>
+                    <Route exact path="/flats/:flat" component={FlatPageContainer}/>
                     <Redirect to="/"/>
                 </Switch>
             </Router>

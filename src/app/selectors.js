@@ -14,9 +14,9 @@ export const selectFlatsByStreet = createSelector(
     [selectAllFlats, selectCurrentStreet],
     (flats, street) => flats.filter(flat => flat.streetName === street)
 )
-export const selectClientsById = createSelector(
+export const selectFlatById = createSelector(
     [selectAllFlats, selectCurrentFlatId],
-    (flats, id) => flats.find(flat => flat.addressId === Number(id)).clients
+    (flats, id) => flats.find(flat => flat.addressId === Number(id))
 )
 
 export const selectFlatsByBuilding = createSelector(

@@ -1,5 +1,5 @@
 import {request} from './request'
-const token = '123'
+const token = '123454321'
 
 export const api = {
     getCompanies() {
@@ -35,17 +35,6 @@ export const api = {
             }
         )
     },
-    getClientsByPhone() {
-        return request(
-            `/HousingStock/client?phone=888888888`,
-            'GET',
-            false,
-            {
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        )
-    },
     postClientForm(form){
         return request(
             '/HousingStock/client',
@@ -59,5 +48,17 @@ export const api = {
             JSON.stringify({...form})
         )
     },
-
+    bindClient(data){
+        return request(
+            '/HousingStock/bind_client',
+            'PUT',
+            false,
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            JSON.stringify({...data})
+        )
+    },
 }

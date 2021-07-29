@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {StreetsList} from './StreetsList'
 import {useDispatch, useSelector} from 'react-redux'
-import {fetchFlatsByCompanyId} from '../app/companiesReducer'
+import {fetchFlatsByCompanyId, setCurrentCompanyId} from '../app/companiesReducer'
 import {useHistory} from 'react-router'
 import {selectIsLoading} from '../app/selectors'
 
@@ -11,6 +11,8 @@ const CompanyPage = ({match}) => {
     const history = useHistory()
     const dispatch = useDispatch()
     useEffect(() => {
+        localStorage.setItem('company', company)
+        dispatch(setCurrentCompanyId(company))
         dispatch(fetchFlatsByCompanyId(company))
     }, [dispatch, company])
 

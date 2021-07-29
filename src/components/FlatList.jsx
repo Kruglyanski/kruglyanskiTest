@@ -11,6 +11,7 @@ export const FlatList = ({visible}) => {
     const flats = useSelector(state => selectFlatsByBuilding(state))
     const clickHandler = (e) => {
         dispatch(setCurrentFlatId(e.target.id))
+        localStorage.setItem('currentFlatId', e.target.id)
     }
     return (
         <div>

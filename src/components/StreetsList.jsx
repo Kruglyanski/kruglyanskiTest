@@ -25,6 +25,7 @@ export const StreetsList = () => {
     const clickHandler = (e) => {
         setToggleBuildingVisible({...toggleBuildingVisible, [e.target.title]: !toggleBuildingVisible[e.target.title]})
         dispatch(setCurrentStreet(e.target.title))
+        localStorage.setItem('currentStreet', e.target.title)
     }
     return (
         <div>{streets.length

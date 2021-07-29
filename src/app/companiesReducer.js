@@ -6,10 +6,12 @@ const initialState = {
     companies: [],
     flats: [],
     isLoading: false,
+    currentCompanyId: null,
     currentStreet: null,
     currentBuilding: null,
     currentFlatId: null,
-    currentClientId: null
+    currentClientId: null,
+
 }
 
 export const fetchCompanies = createAsyncThunk(
@@ -39,24 +41,29 @@ export const fetchFlatsByCompanyId = createAsyncThunk(
 )
 export const createClient = createAsyncThunk(
     'companiesReducer/createClient',
-    async ({name, phone, email}) => {
+    async ({name, phone, email}, {dispatch,getState}) => {
+
         const form = {
             Name: name,
             Phone: phone,
-            Email: email,
-            //BindId: bindId
+            Email: email
         }
+        const state = getState()
+
         const data = await api.postClientForm(form)
             .then((res) => res && res.json())
+
         if (!data) {
             throw new Error(data.message || 'Something went wrong!')
         }
+        await api.bindClient({AddressId: state.companies.currentFlatId, ClientId: data.id} )
+        dispatch(fetchFlatsByCompanyId(getState().companies.currentCompanyId))
         return data
     }
 )
 
 export const deleteClient = createAsyncThunk(
-    'companiesReducer/createClient',
+    'companiesReducer/deleteClient',
     async (id) => {
         const data = await api.deleteClient(id)
             .then((res) => res && res.json())
@@ -72,6 +79,9 @@ const companiesReducer = createSlice({
     name: 'companiesReducer',
     initialState,
     reducers: {
+        setCurrentCompanyId(state, action) {
+            state.currentCompanyId = action.payload
+        },
         setCurrentStreet(state, action) {
             state.currentStreet = action.payload
         },
@@ -80,6 +90,9 @@ const companiesReducer = createSlice({
         },
         setCurrentFlatId(state, action) {
             state.currentFlatId = action.payload
+        },
+        setCreatedClientId(state, action) {
+            state.createdClientId = action.payload
         }
 
     },
@@ -110,30 +123,8 @@ const companiesReducer = createSlice({
                 isLoading: false
             }
         },
-        [createClient.pending]: (state) => {
-            return {
-                ...state
-            }
-        },
-        [createClient.fulfilled]: (state, action) => {
-            return {
-                ...state
-
-            }
-        },
-        [deleteClient.pending]: (state) => {
-            return {
-                ...state
-            }
-        },
-        [deleteClient.fulfilled]: (state) => {
-            return {
-                ...state
-
-            }
-        },
     }
 })
 
-export const {setCurrentStreet, setCurrentBuilding, setCurrentFlatId, formChange} = companiesReducer.actions
+export const {setCurrentStreet, setCurrentBuilding, setCurrentFlatId, setCurrentCompanyId} = companiesReducer.actions
 export default companiesReducer.reducer

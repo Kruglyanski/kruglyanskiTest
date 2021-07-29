@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {deleteClient} from '../app/companiesReducer'
+import React, {useEffect, useState} from 'react'
+import {deleteClient, fetchFlatsByCompanyId} from '../app/companiesReducer'
 import {useDispatch} from 'react-redux'
 
 const ClientCard = ({client}) => {

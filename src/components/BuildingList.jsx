@@ -24,6 +24,7 @@ export const BuildingList = ({visible}) => {
     const clickHandler = (e) => {
         setToggleFlatVisible({...toggleFlatVisible, [e.target.id]: !toggleFlatVisible[e.target.id]})
         dispatch(setCurrentBuilding(e.target.id))
+        localStorage.setItem('currentBuilding', e.target.id)
 
     }
     return (
